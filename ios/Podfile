@@ -36,6 +36,7 @@ target 'camera' do
 
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'cameraTests' do
     inherit! :search_paths
