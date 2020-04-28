@@ -1,5 +1,5 @@
 {
-  "name": "camera",
+  "name": "mark-camera-app",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -11,9 +11,13 @@
   },
   "dependencies": {
     "@react-native-community/cameraroll": "^1.4.1",
+    "components": "^0.1.0",
     "react": "16.9.0",
-    "react-native": "0.61.5",
-    "react-native-camera": "^3.20.0"
+    "react-native": "^0.62.2",
+    "react-native-camera": "^3.20.0",
+    "react-native-video": "^4.4.5",
+    "styled": "^1.0.0",
+    "styled-components": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

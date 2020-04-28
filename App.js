@@ -1,66 +1,49 @@
-import React, { PureComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { RNCamera } from 'react-native-camera';
-import CameraRoll from "@react-native-community/cameraroll";
+import React, { Component } from 'react';
+import { View, ImageBackground, Text, ScrollView, SafeAreaView } from 'react-native';
+import CameraPreview from './appComponents/Camera.js';
+import PhotoStrip from './appComponents/PhotoStrip.js';
 
-export default class ExampleApp extends PureComponent {
+export default class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      photoData: [null, null, null, null],
+      currentPhotoIndex: 0,
+    };
+  }
+
   render() {
+    const { photoData } = this.state;
     return (
-      <View style={styles.container}>
-        <RNCamera
-          ref={ref => {
-            this.camera = ref;
-          }}
-          style={styles.preview}
-          type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.ff}
-          androidRecordAudioPermissionOptions={{
-            title: 'Permission to use audio recording',
-            message: 'We need your permission to use your audio',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            console.log(barcodes);
-          }}
-        />
-        <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-          <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
-          </TouchableOpacity>
+      <SafeAreaView style={style.mainView}>
+        <PhotoStrip photos={photoData} />
+        <View style={style.bottomHalf}>
+          <CameraPreview storePic={this.displayToTopHalf.bind(this)} />
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 
-  takePicture = async() => {
-    if (this.camera) {
-      const options = { quality: 0.5, base64: true };
-      const data = await this.camera.takePictureAsync(options)
-      console.log(CameraRoll.saveToCameraRoll);
-      CameraRoll.saveToCameraRoll(data.uri, "photo");
+  displayToTopHalf(photo) {
+    const { photoData, currentPhotoIndex } = this.state;
+    console.log(photoData)
+    if (currentPhotoIndex < photoData.length) {
+      photoData[currentPhotoIndex] = { uri: photo };
+      this.setState({ photoData, currentPhotoIndex: currentPhotoIndex + 1 });
     }
-  };
-}
+  }
+};
 
-const styles = StyleSheet.create({
-  container: {
+const style = {
+  mainView: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: 'black',
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    padding: 15,
-    paddingHorizontal: 20,
-    alignSelf: 'center',
-    margin: 20,
+  bottomHalf: {
+    flex: 1,
+    width: '100%',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: 'hidden',
   },
-});
+};
