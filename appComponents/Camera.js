@@ -8,10 +8,37 @@ import CameraRoll from "@react-native-community/cameraroll";
 export default class ExampleApp extends PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      flashOn: false,
+      backCamera: true,
+    };
     this.takePicture = this.takePicture.bind(this);
+    this.handleFlashButton = this.handleFlashButton.bind(this);
+    this.switchCameraButton = this.switchCameraButton.bind(this);
   }
+
+  handleFlashButton() {
+    const { flashOn } = this.state;
+    this.setState({ flashOn: !flashOn });
+  }
+
+  switchCameraButton() {
+    const { backCamera } = this.state;
+    this.setState({ backCamera: !backCamera });
+  }
+
+  takePicture = async () => {
+    // const { storePic } = this.props;
+    if (this.camera) {
+      const options = { quality: 0.2, base64: true };
+      const data = await this.camera.takePictureAsync(options);
+      // storePic(data.uri);
+      // CameraRoll.saveToCameraRoll(data.uri, 'photo');
+    }
+  };
+
   render() {
-    const { flash } = this.props;
+    const { flashOn, backCamera } = this.state;
     return (
       <View style={style.container}>
         <RNCamera
@@ -19,8 +46,8 @@ export default class ExampleApp extends PureComponent {
             this.camera = ref;
           }}
           style={style.preview}
-          type={RNCamera.Constants.Type.back}
-          flashMode={flash}
+          type={RNCamera.Constants.Type[backCamera ? 'back' : 'front']}
+          flashMode={RNCamera.Constants.FlashMode[flashOn ? 'on' : 'off']}
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
             console.log(barcodes);
           }}
@@ -30,19 +57,23 @@ export default class ExampleApp extends PureComponent {
             <Text style={{ fontSize: 14 }}> SNAP </Text>
           </TouchableOpacity>
         </View>
+        <Icon
+          name={flashOn ? 'flash' : 'flash-outline'}
+          color="white"
+          size={24}
+          style={style.flashIcon}
+          onPress={this.handleFlashButton}
+        />
+        <Icon
+          name={'camera-switch'}
+          color="white"
+          size={24}
+          style={style.switchCameraIcon}
+          onPress={this.switchCameraButton}
+        />
       </View>
     );
   }
-
-  takePicture = async () => {
-    const { storePic } = this.props;
-    if (this.camera) {
-      const options = { quality: 0.2, base64: true };
-      const data = await this.camera.takePictureAsync(options);
-      // storePic(data.uri);
-      CameraRoll.saveToCameraRoll(data.uri, 'photo');
-    }
-  };
 }
 
 const style = StyleSheet.create({
@@ -64,5 +95,15 @@ const style = StyleSheet.create({
     paddingHorizontal: 20,
     alignSelf: 'center',
     margin: 30,
+  },
+  flashIcon: {
+    position: 'absolute',
+    top: 30,
+    left: 30,
+  },
+  switchCameraIcon: {
+    position: 'absolute',
+    top: 30,
+    left: 70,
   },
 });

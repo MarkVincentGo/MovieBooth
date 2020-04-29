@@ -20,11 +20,6 @@ const style = StyleSheet.create({
     top: 30,
     right: 30,
   },
-  flashIcon: {
-    position: 'absolute',
-    top: 30,
-    left: 30,
-  },
 });
 
 export default class CameraScreen extends Component {
@@ -35,17 +30,11 @@ export default class CameraScreen extends Component {
       flash: false,
     };
     this.handleExpandButton = this.handleExpandButton.bind(this);
-    this.handleFlashButton = this.handleFlashButton.bind(this);
   }
 
   handleExpandButton() {
     const { fullScreenCamera } = this.state;
     this.setState({ fullScreenCamera: !fullScreenCamera });
-  }
-
-  handleFlashButton() {
-    const { flash } = this.state;
-    this.setState({ flash: !flash });
   }
 
   render() {
@@ -61,14 +50,7 @@ export default class CameraScreen extends Component {
             size={24}
             style={style.expandIcon}
             onPress={this.handleExpandButton}
-          />
-          <Icon
-            name={flash ? 'flash' : 'flash-outline'}
-            color="white"
-            size={24}
-            style={style.flashIcon}
-            onPress={this.handleFlashButton}
-          />
+        />
         </View>
       </Layout>
     );
