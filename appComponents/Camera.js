@@ -1,30 +1,32 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CameraRoll from "@react-native-community/cameraroll";
+
 
 export default class ExampleApp extends PureComponent {
   constructor(props) {
     super(props);
     this.takePicture = this.takePicture.bind(this);
-
   }
   render() {
+    const { flash } = this.props;
     return (
-      <View style={styles.container}>
+      <View style={style.container}>
         <RNCamera
           ref={ref => {
             this.camera = ref;
           }}
-          style={styles.preview}
+          style={style.preview}
           type={RNCamera.Constants.Type.back}
-          flashMode={RNCamera.Constants.FlashMode.ff}
+          flashMode={flash}
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
             console.log(barcodes);
           }}
         />
         <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-          <TouchableOpacity onPress={this.takePicture} style={styles.capture}>
+          <TouchableOpacity onPress={this.takePicture} style={style.capture}>
             <Text style={{ fontSize: 14 }}> SNAP </Text>
           </TouchableOpacity>
         </View>
@@ -32,18 +34,18 @@ export default class ExampleApp extends PureComponent {
     );
   }
 
-  takePicture = async() => {
+  takePicture = async () => {
     const { storePic } = this.props;
     if (this.camera) {
-      const options = { quality: 0.5, base64: true };
+      const options = { quality: 0.2, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      storePic(data.uri);
-      // CameraRoll.saveToCameraRoll(data.uri, "photo");
+      // storePic(data.uri);
+      CameraRoll.saveToCameraRoll(data.uri, 'photo');
     }
   };
 }
 
-const styles = StyleSheet.create({
+const style = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
