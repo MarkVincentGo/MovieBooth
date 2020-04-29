@@ -26,6 +26,7 @@ var style = StyleSheet.create({
   },
   pop: {
     flex: 1,
+    alignItems: 'center',
   },
 });
 

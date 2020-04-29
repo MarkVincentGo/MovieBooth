@@ -11,8 +11,14 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  container: {
-    width: '75%',
+  inputBackground: {
+    width: '80%',
+    height: 250,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    borderRadius: 10,
+    justifyContent: 'center',
+  },
+  outerContainer: {
     marginBottom: 15,
   },
   inputContainer: {
@@ -29,19 +35,24 @@ export default class Login extends Component {
     return (
       <Layout>
         <View style={style.wrapper}>
-          {['username', 'password'].map(field => (
-            <Input
-              key={field}
-              placeholder={field}
-              leftIcon={<Icon name="user" size={24} color="white" />}
-              containerStyle={style.container}
-              inputContainerStyle={style.inputContainer}
-              inputStyle={style.input}
-              placeholderTextColor="#e1e1e1"
-            />
-          ))}
-          <Button title="Login" type="clear" />
-          <Button title="Sign Up" type="clear" />
+          <View style={style.inputBackground}>
+            {[
+              { type: 'username', icon: 'user' },
+              { type: 'password', icon: 'lock' },
+            ].map(field => (
+              <Input
+                key={field}
+                placeholder={field.type}
+                leftIcon={<Icon name={field.icon} size={24} color="white" />}
+                containerStyle={style.outerContainer}
+                inputContainerStyle={style.inputContainer}
+                inputStyle={style.input}
+                placeholderTextColor="#e1e1e1"
+              />
+            ))}
+            <Button title="Login" type="clear" />
+            <Button title="Sign Up" type="clear" />
+          </View>
         </View>
       </Layout>
     );
