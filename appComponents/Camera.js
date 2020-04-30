@@ -30,7 +30,7 @@ export default class ExampleApp extends PureComponent {
   takePicture = async () => {
     // const { storePic } = this.props;
     if (this.camera) {
-      const options = { quality: 0.2, base64: true };
+      const options = { quality: 0.1, base64: true };
       const data = await this.camera.takePictureAsync(options);
       // storePic(data.uri);
       // CameraRoll.saveToCameraRoll(data.uri, 'photo');
@@ -51,23 +51,27 @@ export default class ExampleApp extends PureComponent {
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
             console.log(barcodes);
           }}
-        />
-        <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
+        >
           <TouchableOpacity onPress={this.takePicture} style={style.capture}>
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
+            <Icon
+              name={'camera'}
+              color="black"
+              size={30}
+              onPress={this.takePicture}
+              />
           </TouchableOpacity>
-        </View>
+        </RNCamera>
         <Icon
           name={flashOn ? 'flash' : 'flash-outline'}
           color="white"
-          size={24}
+          size={30}
           style={style.flashIcon}
           onPress={this.handleFlashButton}
         />
         <Icon
           name={'camera-switch'}
           color="white"
-          size={24}
+          size={30}
           style={style.switchCameraIcon}
           onPress={this.switchCameraButton}
         />
@@ -80,7 +84,6 @@ const style = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'black',
   },
   preview: {
     flex: 1,
@@ -91,7 +94,7 @@ const style = StyleSheet.create({
     flex: 0,
     backgroundColor: '#fff',
     borderRadius: 75,
-    padding: 15,
+    padding: 16,
     paddingHorizontal: 20,
     alignSelf: 'center',
     margin: 30,

@@ -47,7 +47,7 @@ export default class CameraScreen extends Component {
           <Icon
             name={'arrow-expand'}
             color="white"
-            size={24}
+            size={30}
             style={style.expandIcon}
             onPress={this.handleExpandButton}
         />
