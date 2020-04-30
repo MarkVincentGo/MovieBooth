@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import Layout from './Layout';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createStackNavigator } from '@react-navigation/stack';
 import Camera from './Camera';
 
 const style = StyleSheet.create({
   cameraView: expanded => ({
     position: 'absolute',
-    height: expanded ? '90%' : 300,
+    height: expanded ? '95%' : 300,
     bottom: '5%',
     width: expanded ? '100%' : '90%',
     borderRadius: 30,
@@ -50,7 +50,7 @@ export default class CameraScreen extends Component {
             size={30}
             style={style.expandIcon}
             onPress={this.handleExpandButton}
-        />
+          />
         </View>
       </Layout>
     );

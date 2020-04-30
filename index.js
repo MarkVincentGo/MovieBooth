@@ -9,7 +9,8 @@ import { ThemeProvider } from 'react-native-elements';
 import App from './App';
 import {name as appName} from './app.json';
 import Login from './appComponents/Login';
-import HomeScreen from './appComponents/CameraScreen';
+import CameraScreen from './appComponents/CameraScreen';
+import HomeScreen from './appComponents/HomeScreen';
 
 const theme = {
   colors: {

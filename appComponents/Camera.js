@@ -2,8 +2,7 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import CameraRoll from "@react-native-community/cameraroll";
-
+// import CameraRoll from "@react-native-community/cameraroll";
 
 export default class ExampleApp extends PureComponent {
   constructor(props) {
@@ -50,15 +49,14 @@ export default class ExampleApp extends PureComponent {
           flashMode={RNCamera.Constants.FlashMode[flashOn ? 'on' : 'off']}
           onGoogleVisionBarcodesDetected={({ barcodes }) => {
             console.log(barcodes);
-          }}
-        >
+          }}>
           <TouchableOpacity onPress={this.takePicture} style={style.capture}>
             <Icon
               name={'camera'}
               color="black"
               size={30}
               onPress={this.takePicture}
-              />
+            />
           </TouchableOpacity>
         </RNCamera>
         <Icon
