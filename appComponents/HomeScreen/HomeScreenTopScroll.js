@@ -7,6 +7,9 @@ const style = StyleSheet.create({
     height: 200,
     marginLeft: '2%',
   },
+  scrollContentContainer: {
+    alignContent: 'center',
+  },
   iconContainer: {
     height: '100%',
     aspectRatio: 1,
@@ -22,9 +25,10 @@ const HomeScreenTopScroll = ({ navigation, icons }) => {
     <ScrollView
       style={style.scrollContainer}
       horizontal
-      contentContainerStyle={{ alignItems: 'center' }}
+      contentContainerStyle={style.scrollContentContainer}
+      showsHorizontalScrollIndicator={false}
       snapToInterval={200}
-      snapToAlignment={"center"}>
+      snapToAlignment={'start'}>
       {icons.map(icon => (
         <TouchableOpacity
           style={style.iconContainer}

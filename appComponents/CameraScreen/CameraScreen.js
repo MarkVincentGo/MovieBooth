@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, Image } from 'react-native';
 import Layout from '../Layout';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Camera from './Camera';
+import DevelopingImage from '../DevelopingImage';
 
 const style = StyleSheet.create({
   stripContainer: {
@@ -16,6 +17,9 @@ const style = StyleSheet.create({
     height: '100%',
     width: '100%',
     paddingLeft: 15,
+  },
+  scrollContentContainer: {
+    alignItems: 'center',
   },
   photoContainer: {
     height: 190,
@@ -74,13 +78,20 @@ export default class CameraScreen extends Component {
           <ScrollView
             style={style.scrollContainer}
             horizontal
-            contentContainerStyle={{ alignItems: 'center' }}
+            contentContainerStyle={style.scrollContentContainer}
             snapToAlignment={'start'}>
-            {photoData.map(photo => (
-              <View>
-                <Image source={photo} style={style.photoContainer} />
-              </View>
-            ))}
+            {photoData.map(photo => {
+              return !photo ? (
+                <View>
+                  <View style={style.photoContainer} />
+                </View>
+              ) : (
+                <View>
+                  <Image source={photo} style={style.photoContainer} />
+                  <DevelopingImage style={style.photoContainer} />
+                </View>
+              );
+            })}
           </ScrollView>
         </View>
         <View style={style.cameraView(fullScreenCamera)}>

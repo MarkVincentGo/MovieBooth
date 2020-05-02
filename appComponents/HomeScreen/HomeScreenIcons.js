@@ -15,4 +15,4 @@ export const topScrollIcons = [
     name: 'Settings',
     icon: 'cogs',
   },
-]
+];
