@@ -19,14 +19,13 @@ const style = StyleSheet.create({
   },
 });
 
-
 const HomeScreenMainScroll = () => {
   return (
     <ScrollView style={style.scrollContainer}>
-    {[1, 2, 3, 4, 5, 6, 7, 8].map(() => (
-      <View style={style.picContainer} />
-    ))}
-  </ScrollView>
+      {[1, 2, 3, 4, 5, 6, 7, 8].map(() => (
+        <View style={style.picContainer} />
+      ))}
+    </ScrollView>
   );
 };
 

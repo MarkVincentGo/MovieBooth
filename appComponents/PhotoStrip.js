@@ -26,7 +26,7 @@ export default ({ photos }) => {
     <ScrollView style={{flex: 1}}>
       <View style={style.stripContainer}>
         {photos.map((pic, i) => (
-            <Image source={photos[i]} style={style.singlePicture} />
+            <Image source={pic} style={style.singlePicture} />
         ))}
       </View>
     </ScrollView>

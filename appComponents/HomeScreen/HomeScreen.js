@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
+import Layout from '../Layout';
+import TopScroll from './HomeScreenTopScroll';
+import MainScroll from './HomeScreenMainScroll';
+import { TopScrollIcons, topScrollIcons } from './HomeScreenIcons';
 import {
   StyleSheet,
   View,
   Dimensions,
   PanResponder,
   Animated,
-  ScrollView,
 } from 'react-native';
-import Layout from './Layout';
-import TopScroll from './HomeScreenTopScroll';
-import MainScroll from './HomeScreenMainScroll';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 const style = StyleSheet.create({
   scrollContainer: {
@@ -85,7 +83,7 @@ export default class MyComponent extends Component {
               { backgroundColor: 'rgba(0,200,200,0.2)', minHeight: 120, flex: 1 },
               { height: this.state.topHeight },
             ]}>
-            <TopScroll navigation={navigation} />
+            <TopScroll navigation={navigation} icons={topScrollIcons} />
           </Animated.View>
           <View
             style={[

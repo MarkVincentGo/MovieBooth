@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // import CameraRoll from "@react-native-community/cameraroll";
@@ -27,11 +27,11 @@ export default class ExampleApp extends PureComponent {
   }
 
   takePicture = async () => {
-    // const { storePic } = this.props;
+    const { storePic } = this.props;
     if (this.camera) {
       const options = { quality: 0.1, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      // storePic(data.uri);
+      storePic(data.uri);
       // CameraRoll.saveToCameraRoll(data.uri, 'photo');
     }
   };

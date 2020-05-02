@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import Layout from './Layout';
+import { View, StyleSheet, ScrollView, Image } from 'react-native';
+import Layout from '../Layout';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Camera from './Camera';
-import HomeScreenTopScroll from './HomeScreenTopScroll';
 
 const style = StyleSheet.create({
   stripContainer: {
-    height: 250,
+    height: 230,
     borderWidth: 1,
     borderColor: 'black',
     width: '100%',
@@ -17,10 +16,9 @@ const style = StyleSheet.create({
     height: '100%',
     width: '100%',
     paddingLeft: 15,
-    marginRight: 500,
   },
-  iconContainer: {
-    height: 200,
+  photoContainer: {
+    height: 190,
     aspectRatio: 1,
     marginLeft: 30,
     borderColor: 'black',
@@ -30,7 +28,7 @@ const style = StyleSheet.create({
   cameraView: expanded => ({
     position: 'absolute',
     height: expanded ? '85%' : 'auto',
-    bottom: '15%',
+    bottom: '20%',
     width: expanded ? '90%' : '90%',
     aspectRatio: expanded ? null : 1,
     borderRadius: 30,
@@ -48,9 +46,11 @@ export default class CameraScreen extends Component {
     super();
     this.state = {
       fullScreenCamera: false,
-      flash: false,
+      photoData: [null, null, null, null],
+      currentPhotoIndex: 0,
     };
     this.handleExpandButton = this.handleExpandButton.bind(this);
+    this.displayToTopHalf = this.displayToTopHalf.bind(this);
   }
 
   handleExpandButton() {
@@ -58,23 +58,33 @@ export default class CameraScreen extends Component {
     this.setState({ fullScreenCamera: !fullScreenCamera });
   }
 
+  displayToTopHalf(photo) {
+    const { photoData, currentPhotoIndex } = this.state;
+    if (currentPhotoIndex < photoData.length) {
+      photoData[currentPhotoIndex] = { uri: photo };
+      this.setState({ photoData, currentPhotoIndex: currentPhotoIndex + 1 });
+    }
+  }
+
   render() {
-    const { fullScreenCamera, flash } = this.state;
+    const { fullScreenCamera, photoData } = this.state;
     return (
       <Layout>
-        <View style={{height: 250, borderWidth: 1, borderColor: 'black', width: '100%'}}>
-          <ScrollView 
+        <View style={style.stripContainer}>
+          <ScrollView
             style={style.scrollContainer}
             horizontal
-            contentContainerStyle={{ alignItems: 'center' }}>
-            {[1,2,3,4].map(() => (
-              <View style={style.iconContainer}>
+            contentContainerStyle={{ alignItems: 'center' }}
+            snapToAlignment={'start'}>
+            {photoData.map(photo => (
+              <View>
+                <Image source={photo} style={style.photoContainer} />
               </View>
             ))}
           </ScrollView>
         </View>
         <View style={style.cameraView(fullScreenCamera)}>
-          <Camera flash={flash} />
+          <Camera storePic={this.displayToTopHalf} />
           <Icon
             name={'arrow-expand'}
             color="white"
