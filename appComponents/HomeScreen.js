@@ -8,7 +8,10 @@ import {
   ScrollView,
 } from 'react-native';
 import Layout from './Layout';
-import TopScroll from './HomeScreenTopScroll'
+import TopScroll from './HomeScreenTopScroll';
+import MainScroll from './HomeScreenMainScroll';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 const style = StyleSheet.create({
   scrollContainer: {
@@ -73,6 +76,7 @@ export default class MyComponent extends Component {
   }
 
   render() {
+    const { navigation } = this.props;
     return (
       <Layout>
         <View style={styles.content}>
@@ -80,9 +84,8 @@ export default class MyComponent extends Component {
             style={[
               { backgroundColor: 'rgba(0,200,200,0.2)', minHeight: 120, flex: 1 },
               { height: this.state.topHeight },
-            ]}
-          >
-            <TopScroll />
+            ]}>
+            <TopScroll navigation={navigation} />
           </Animated.View>
           <View
             style={[
@@ -93,17 +96,12 @@ export default class MyComponent extends Component {
             ]}
             {...this._panResponder.panHandlers}
           />
-          {/* Bottom View */}
           <Animated.View
             style={[
               { minHeight: 80, alignItems: 'center' },
               { height: this.state.bottomHeight },
             ]}>
-            <ScrollView style={style.scrollContainer}>
-              {[1, 2, 3, 4, 5, 6, 7, 8].map(() => (
-                <View style={style.picContainer} />
-              ))}
-            </ScrollView>
+            <MainScroll />
           </Animated.View>
         </View>
       </Layout>

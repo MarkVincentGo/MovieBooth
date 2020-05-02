@@ -11,6 +11,10 @@ import {name as appName} from './app.json';
 import Login from './appComponents/Login';
 import CameraScreen from './appComponents/CameraScreen';
 import HomeScreen from './appComponents/HomeScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Navigation from './appComponents/Navigation'
+
 
 const theme = {
   colors: {
@@ -20,7 +24,7 @@ const theme = {
 
 const Main = () => (
   <ThemeProvider theme={theme}>
-    <HomeScreen />
+    <Navigation />
   </ThemeProvider>
 );
 
