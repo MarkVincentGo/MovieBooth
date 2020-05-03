@@ -52,11 +52,29 @@ export default class CameraScreen extends Component {
     super();
     this.state = {
       fullScreenCamera: false,
-      photoData: [null, null, null, null],
+      photoData: [[], [], [], []],
       currentPhotoIndex: 0,
+      boomCounter: 1,
+      goingUp: true,
     };
     this.handleExpandButton = this.handleExpandButton.bind(this);
     this.displayToTopHalf = this.displayToTopHalf.bind(this);
+  }
+
+  componentDidMount() {
+    // setInterval(() => {
+    //   this.setState(prevState => {
+    //     if (prevState.boomCounter < 9 && prevState.goingUp) {
+    //       return { boomCounter: prevState.boomCounter + 1 };
+    //     } else if (prevState.boomCounter === 9 && prevState.goingUp) {
+    //       return { boomCounter: prevState.boomCounter - 1, goingUp: false };
+    //     } else if (prevState.boomCounter > 0 && !prevState.goingUp) {
+    //       return { boomCounter: prevState.boomCounter - 1 };
+    //     } else if (prevState.boomCounter === 0 && !prevState.goingUp) {
+    //       return { boomCounter: prevState.boomCounter + 1, goingUp: true };
+    //     }
+    //   });
+    // }, 50);
   }
 
   handleExpandButton() {
@@ -67,13 +85,13 @@ export default class CameraScreen extends Component {
   displayToTopHalf(photo) {
     const { photoData, currentPhotoIndex } = this.state;
     if (currentPhotoIndex < photoData.length) {
-      photoData[currentPhotoIndex] = { uri: photo };
-      this.setState({ photoData, currentPhotoIndex: currentPhotoIndex + 1 });
+      photoData[currentPhotoIndex] = photo;
+      this.setState({ photoData, currentPhotoIndex: currentPhotoIndex + 1 },() => console.log(this.state.photoData));
     }
   }
 
   render() {
-    const { fullScreenCamera, photoData } = this.state;
+    const { fullScreenCamera, photoData, boomCounter } = this.state;
     return (
       <Layout>
         <View style={style.stripContainer}>
@@ -84,18 +102,16 @@ export default class CameraScreen extends Component {
             showsHorizontalScrollIndicator={false}
             snapToAlignment={'start'}>
             {photoData.map(photo => {
-              return !photo ? (
+              return !photo.length ? (
                 <View>
                   <View style={[style.photoContainer, {backgroundColor: 'black'}]} />
                 </View>
               ) : (
                 <View>
                   <Image
-                    source={photo}
-                    style={[
-                      style.photoContainer,
-                      { transform: [{ rotate: '270deg' }] },
-                    ]}
+                    key={photo}
+                    source={photo[boomCounter % 10]}
+                    style={style.photoContainer}
                   />
                   <DevelopingImage style={style.photoContainer} />
                 </View>
