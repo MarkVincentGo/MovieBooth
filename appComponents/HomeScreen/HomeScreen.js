@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Layout from '../Layout';
 import TopScroll from './HomeScreenTopScroll';
 import MainScroll from './HomeScreenMainScroll';
-import { TopScrollIcons, topScrollIcons } from './HomeScreenIcons';
+import { topScrollIcons } from './HomeScreenIcons';
 import {
   StyleSheet,
   View,
@@ -12,31 +12,22 @@ import {
 } from 'react-native';
 
 const style = StyleSheet.create({
-  scrollContainer: {
+  content: {
     flex: 1,
-    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
     width: '100%',
-    padding: 20,
-  },
-  picContainer: {
-    width: '100%',
-    height: 380,
-    borderWidth: 2,
-    borderColor: 'black',
-    marginBottom: 20,
   },
 });
 
 export default class MyComponent extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       topHeight: 40, // min height for top pane header
       bottomHeight: Dimensions.get('window').height - 200, // min height for bottom pane header,
       deviceHeight: Dimensions.get('window').height,
       isDividerClicked: false,
-      offset: 0,
       pan: new Animated.ValueXY(),
     };
   }
@@ -50,7 +41,6 @@ export default class MyComponent extends Component {
       onPanResponderGrant: (e, gestureState) => {
         this.setState({
           isDividerClicked: true,
-          offset: 40,
         });
       },
 
@@ -77,7 +67,7 @@ export default class MyComponent extends Component {
     const { navigation } = this.props;
     return (
       <Layout>
-        <View style={styles.content}>
+        <View style={style.content}>
           <Animated.View
             style={[
               { backgroundColor: 'rgba(0,200,200,0.2)', minHeight: 120, flex: 1 },
@@ -106,12 +96,3 @@ export default class MyComponent extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  content: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: '100%',
-  },
-});

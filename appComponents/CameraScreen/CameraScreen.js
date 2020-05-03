@@ -16,15 +16,17 @@ const style = StyleSheet.create({
     flex: 1,
     height: '100%',
     width: '100%',
-    paddingLeft: 15,
+    paddingLeft: 10,
+    backgroundColor: 'rgba(225,225,225,0.7)',
+    borderRadius: 10,
   },
   scrollContentContainer: {
     alignItems: 'center',
   },
   photoContainer: {
-    height: 190,
+    height: 180,
     aspectRatio: 1,
-    marginLeft: 30,
+    marginLeft: 20,
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 10,
@@ -79,15 +81,22 @@ export default class CameraScreen extends Component {
             style={style.scrollContainer}
             horizontal
             contentContainerStyle={style.scrollContentContainer}
+            showsHorizontalScrollIndicator={false}
             snapToAlignment={'start'}>
             {photoData.map(photo => {
               return !photo ? (
                 <View>
-                  <View style={style.photoContainer} />
+                  <View style={[style.photoContainer, {backgroundColor: 'black'}]} />
                 </View>
               ) : (
                 <View>
-                  <Image source={photo} style={style.photoContainer} />
+                  <Image
+                    source={photo}
+                    style={[
+                      style.photoContainer,
+                      { transform: [{ rotate: '270deg' }] },
+                    ]}
+                  />
                   <DevelopingImage style={style.photoContainer} />
                 </View>
               );
