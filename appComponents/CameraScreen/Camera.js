@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Promise from 'bluebird';
 // import CameraRoll from "@react-native-community/cameraroll";
 
 export default class ExampleApp extends PureComponent {
@@ -11,13 +10,11 @@ export default class ExampleApp extends PureComponent {
     this.state = {
       flashOn: false,
       backCamera: true,
-      boomerangRepeats: 0,
-      boomerangArray: [],
     };
     this.takePicture = this.takePicture.bind(this);
     this.handleFlashButton = this.handleFlashButton.bind(this);
     this.switchCameraButton = this.switchCameraButton.bind(this);
-    this.takeBoomerang = this.takeBoomerang.bind(this)
+    this.takeVideo = this.takeVideo.bind(this);
   }
 
   handleFlashButton() {
@@ -32,35 +29,29 @@ export default class ExampleApp extends PureComponent {
 
   takePicture = () => {
     const { storePic } = this.props;
-    const photoArray = [];
     if (this.camera) {
-      const options = { quality: 0.1, skipProcessing: true, };
-      this.camera.takePictureAsync(options)
-        .then(data => {
-          // storePic(data.uri)
-        })
+      const options = { quality: 0.1, skipProcessing: true };
+      this.camera.takePictureAsync(options).then(data => {
+        console.log(data.uri);
+        // storePic(data.uri)
+      });
       //storePic(data.uri);
       // CameraRoll.saveToCameraRoll(data.uri, 'photo');
     }
   };
 
-  takeBoomerang() {
-    const { boomerangRepeats, boomerangArray } = this.state;
-    const { storePic } = this.props;
-    if (boomerangRepeats < 10) {
-      setTimeout(() => {
-        this.camera.takePictureAsync({ quality: 0.1 }).then(data => {
-          boomerangArray.push({ uri: data.uri });
-          this.setState(prevState => ({
-            boomerangRepeats: prevState.boomerangRepeats + 1,
-            boomerangArray,
-          }));
-        });
-      }, 50);
-    } else {
-      console.log(boomerangArray);
-      storePic(boomerangArray);
-      this.setState({ boomerangRepeats: 0, boomerangArray: [] });
+  takeVideo() {
+    const { storeVid } = this.props;
+    if (this.camera) {
+      this.camera
+        .recordAsync({
+          quality: RNCamera.Constants.VideoQuality['720p'],
+          maxDuration: 2.5,
+          codec: RNCamera.Constants.VideoCodec.HVEC,
+          videoBitrate: 2 * 1000,
+          mute: true,
+        })
+        .then(data => storeVid(data.uri));
     }
   }
 
@@ -73,18 +64,12 @@ export default class ExampleApp extends PureComponent {
             this.camera = ref;
           }}
           style={style.preview}
-          autoFocus={RNCamera.Constants.AutoFocus.off}
+          autoFocus={RNCamera.Constants.AutoFocus.on}
           type={RNCamera.Constants.Type[backCamera ? 'back' : 'front']}
           flashMode={RNCamera.Constants.FlashMode[flashOn ? 'on' : 'off']}
-          captureAudio={false}
-          onPictureTaken={this.takeBoomerang}>
-          <TouchableOpacity onPress={this.takePicture} style={style.capture}>
-            <Icon
-              name={'camera'}
-              color="black"
-              size={30}
-              onPress={this.takePicture}
-            />
+          captureAudio={false}>
+          <TouchableOpacity onPress={this.takeVideo} style={style.capture}>
+            <Icon name={'camera'} color="black" size={30} />
           </TouchableOpacity>
         </RNCamera>
         <Icon
