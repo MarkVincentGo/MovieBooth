@@ -77,10 +77,10 @@ export default class MyComponent extends Component {
           </Animated.View>
           <View
             style={[
-              { height: 15 },
+              { height: 15, borderColor: 'black', borderTopWidth: 1, borderBottomWidth: 1 },
               this.state.isDividerClicked
-                ? { backgroundColor: '#777' }
-                : { backgroundColor: '#e2e2e2' },
+              ? { backgroundColor: 'rgba(225,225,225,0.5)' }
+              : { backgroundColor: 'rgba(0,0,0,0)' },
             ]}
             {...this._panResponder.panHandlers}
           />
