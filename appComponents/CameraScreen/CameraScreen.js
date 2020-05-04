@@ -8,7 +8,7 @@ import Video, { FilterType } from 'react-native-video';
 
 const style = StyleSheet.create({
   stripContainer: {
-    height: 230,
+    height: 80,
     borderWidth: 1,
     borderColor: 'black',
     width: '100%',
@@ -25,7 +25,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   photoContainer: {
-    height: 180,
+    height: 63,
     aspectRatio: 1,
     marginLeft: 20,
     borderWidth: 1,

@@ -14,7 +14,7 @@ export default class ExampleApp extends PureComponent {
     this.takePicture = this.takePicture.bind(this);
     this.handleFlashButton = this.handleFlashButton.bind(this);
     this.switchCameraButton = this.switchCameraButton.bind(this);
-    this.takeVideo = this.takeVideo.bind(this);
+    this.takeVideo = this.takeVideo.bind(this)
   }
 
   handleFlashButton() {
@@ -27,15 +27,12 @@ export default class ExampleApp extends PureComponent {
     this.setState({ backCamera: !backCamera });
   }
 
-  takePicture = () => {
+  takePicture = async () => {
     const { storePic } = this.props;
     if (this.camera) {
-      const options = { quality: 0.1, skipProcessing: true };
-      this.camera.takePictureAsync(options).then(data => {
-        console.log(data.uri);
-        // storePic(data.uri)
-      });
-      //storePic(data.uri);
+      const options = { quality: 0.1, base64: true };
+      const data = await this.camera.takePictureAsync(options);
+      storePic(data.uri);
       // CameraRoll.saveToCameraRoll(data.uri, 'photo');
     }
   };
@@ -64,12 +61,18 @@ export default class ExampleApp extends PureComponent {
             this.camera = ref;
           }}
           style={style.preview}
-          autoFocus={RNCamera.Constants.AutoFocus.on}
           type={RNCamera.Constants.Type[backCamera ? 'back' : 'front']}
           flashMode={RNCamera.Constants.FlashMode[flashOn ? 'on' : 'off']}
-          captureAudio={false}>
+          onGoogleVisionBarcodesDetected={({ barcodes }) => {
+            console.log(barcodes);
+          }}>
           <TouchableOpacity onPress={this.takeVideo} style={style.capture}>
-            <Icon name={'camera'} color="black" size={30} />
+            <Icon
+              name={'camera'}
+              color="black"
+              size={30}
+              onPress={this.takePicture}
+            />
           </TouchableOpacity>
         </RNCamera>
         <Icon
