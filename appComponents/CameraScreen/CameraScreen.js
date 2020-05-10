@@ -8,7 +8,7 @@ import Video, { FilterType } from 'react-native-video';
 
 const style = StyleSheet.create({
   stripContainer: {
-    height: 80,
+    height: 200,
     borderWidth: 1,
     borderColor: 'black',
     width: '100%',
@@ -25,7 +25,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   photoContainer: {
-    height: 63,
+    height: 180,
     aspectRatio: 1,
     marginLeft: 20,
     borderWidth: 1,
@@ -146,7 +146,6 @@ export default class CameraScreen extends Component {
                     maxBitRate={2000000}
                     onLoad={() => {
                       setInterval(() => {
-                        console.log(this.state.boomCounter / 10);
                         if (this[player]) {
                           this[player].seek(this.state.boomCounter / 10, 0);
                         }

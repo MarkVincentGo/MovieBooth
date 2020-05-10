@@ -42,7 +42,7 @@ export default class ExampleApp extends PureComponent {
     if (this.camera) {
       this.camera
         .recordAsync({
-          quality: RNCamera.Constants.VideoQuality['720p'],
+          quality: RNCamera.Constants.VideoQuality['480p'],
           maxDuration: 2.5,
           codec: RNCamera.Constants.VideoCodec.HVEC,
           videoBitrate: 2 * 1000,
@@ -71,7 +71,6 @@ export default class ExampleApp extends PureComponent {
               name={'camera'}
               color="black"
               size={30}
-              onPress={this.takePicture}
             />
           </TouchableOpacity>
         </RNCamera>
